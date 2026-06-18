@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CarWheelsRenderAi</string>
+    <string name="congratulations">Поздравляем</string>
+    <string name="description_pattern">Описание $%1l</string>
 </resources>

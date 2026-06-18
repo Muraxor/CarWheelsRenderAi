@@ -30,6 +30,9 @@ project.extensions.configure<ApplicationExtension> {
     }
 
     buildTypes {
+        debug {
+            isDebuggable = true
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -43,6 +46,20 @@ project.extensions.configure<ApplicationExtension> {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
+//    sourceSets {
+//        getByName("main") {
+//            java {
+//                // Исключить конкретный файл
+//                exclude("**/com/example/livecodeimproved/tbank/ScreenViewModelImproved.kt")
+//                // Или по паттерну
+//                exclude("**/tbank/ScreenViewModelImproved.kt")
+//            }
+//            kotlin {
+//                exclude("**/com/example/livecodeimproved/tbank/ScreenViewModelImproved.kt")
+//            }
+//        }
+//    }
+
 }
 
 kotlin {
@@ -54,6 +71,8 @@ kotlin {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
+    implementation(libs.coroutines)
+    implementation(libs.retrofit)
     implementation(libs.material)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.runtime)
@@ -75,6 +94,7 @@ dependencies {
     implementation(libs.androidx.material3)
     // or skip Material Design and build directly on top of foundational components
     implementation(libs.androidx.foundation)
+    implementation(libs.androidx.foundation.layout)
     // or only import the main APIs for the underlying toolkit systems,
     // such as input and measurement/layout
     implementation(libs.androidx.ui)
@@ -91,4 +111,6 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     // Optional - Integration with ViewModels
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    implementation(project(":app:simplechatexample"))
 }

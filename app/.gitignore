@@ -1,2 +1,41 @@
 /build
 /.idea/migrations.xml
+
+# Gradle
+.gradle/
+build/
+local.properties
+gradle-wrapper.jar
+/gradlew
+/gradlew.bat
+
+# IDE
+.idea/
+*.iml
+*.iws
+.DS_Store
+
+# Android
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+gen/
+bin/
+out/
+captures/
+.build/
+.navigation/
+
+# Kotlin
+.kotlin/
+*.kotlin_builtins
+
+# Логи и временные файлы
+*.log
+*.tmp
+*.temp
+*.lock
+*.hprof
+**/.kotlin/errors/
