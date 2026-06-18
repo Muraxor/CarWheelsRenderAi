@@ -48,6 +48,8 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.material3)
+    implementation(libs.ui.tooling.preview)
+    debugImplementation(libs.ui.tooling)
     ksp(libs.androidx.room.compiler)
 
     implementation(libs.retrofit)

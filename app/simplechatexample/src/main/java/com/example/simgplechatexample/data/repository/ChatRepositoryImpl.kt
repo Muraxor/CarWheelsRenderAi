@@ -1,15 +1,19 @@
 package com.example.simgplechatexample.data.repository
 
+import com.example.simgplechatexample.data.db.dao.ChatDao
 import com.example.simgplechatexample.data.db.dao.MessageDao
 import com.example.simgplechatexample.data.db.mappers.MessageMapper
 import com.example.simgplechatexample.data.entity.toDomain
 import com.example.simgplechatexample.data.entity.toEntity
 import com.example.simgplechatexample.data.network.ChatApi
 import com.example.simgplechatexample.data.network.request.SendMessageRequest
+import com.example.simgplechatexample.data.network.responses.toEntity
+import com.example.simgplechatexample.domain.entity.Chat
 import com.example.simgplechatexample.domain.entity.Message
 import com.example.simgplechatexample.domain.repository.ChatRepository
 import com.example.simgplechatexample.domain.repository.MessagePage
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -17,11 +21,13 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.collections.map
 
 //todo убрать состояние из репозитория
 @Singleton
 class ChatRepositoryImpl @Inject constructor(
     private val dao: MessageDao,
+    private val chatDao: ChatDao,
     private val api: ChatApi
 ) : ChatRepository {
 
@@ -113,5 +119,41 @@ class ChatRepositoryImpl @Inject constructor(
 
     override suspend fun clearCache() {
         dao.deleteAll()
+    }
+
+    override fun getChatsStream(): Flow<List<Chat>> = flow {
+        while (true) {
+            val entities = chatDao.getAllChats()
+            val chats = entities.map { it.toDomain() }
+            emit(chats)
+            delay(1000)
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun syncChatsFromNetwork() {
+        try {
+            val response = api.getAllChats()
+            val entities = response.map { it.toEntity() }
+            chatDao.deleteAll()
+            chatDao.insertAll(entities)
+        } catch (e: Exception) {
+            // Если API нет, используем заглушку
+            val mockChats = listOf(
+                Chat("1", "Alice", "Привет!", System.currentTimeMillis(), null, 3),
+                Chat("2", "Bob", "Как дела?", System.currentTimeMillis() - 3600000, null, 1),
+                Chat("3", "Team", "Встреча в 15:00", System.currentTimeMillis() - 7200000, null, 0)
+            )
+            val entities = mockChats.map { it.toEntity() }
+            chatDao.deleteAll()
+            chatDao.insertAll(entities)
+        }
+    }
+
+    override suspend fun updateUnreadCount(chatId: String, reset: Boolean) {
+        if (reset) {
+            chatDao.resetUnreadCount(chatId)
+        } else {
+            chatDao.incrementUnreadCount(chatId)
+        }
     }
 }

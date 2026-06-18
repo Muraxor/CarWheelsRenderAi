@@ -18,9 +18,5 @@ object DatabaseModule {
     @Singleton
     fun provideChatDatabase(
         @ApplicationContext context: Context
-    ): ChatDatabase = Room.databaseBuilder(
-        context,
-        ChatDatabase::class.java,
-        "chat_database"
-    ).build()
+    ): ChatDatabase = ChatDatabase.getInstance()
 }

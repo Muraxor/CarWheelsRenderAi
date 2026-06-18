@@ -1,6 +1,7 @@
 package com.example.simgplechatexample.data.network
 
 import com.example.simgplechatexample.data.network.request.SendMessageRequest
+import com.example.simgplechatexample.data.network.responses.ChatResponse
 import com.example.simgplechatexample.data.network.responses.MessageResponse
 import com.example.simgplechatexample.data.network.responses.PaginatedResponse
 import retrofit2.http.Body
@@ -29,4 +30,8 @@ interface ChatApi {
         @Query("sortBy") sortBy: String = "createdAt",
         @Query("order") order: String = "desc"
     ): PaginatedResponse<MessageResponse>
+
+    // ✅ Новый метод для списка чатов
+    @GET("chats")  // или твой реальный эндпоинт
+    suspend fun getAllChats(): List<ChatResponse>
 }

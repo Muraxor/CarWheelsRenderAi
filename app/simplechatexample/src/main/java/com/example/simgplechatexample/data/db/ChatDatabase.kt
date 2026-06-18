@@ -4,17 +4,21 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.simgplechatexample.data.db.dao.ChatDao
 import com.example.simgplechatexample.data.db.dao.MessageDao
+import com.example.simgplechatexample.data.entity.ChatEntity
 import com.example.simgplechatexample.data.entity.MessageEntity
 
 @Database(
-    entities = [MessageEntity::class],
-    version = 1,
+    entities = [MessageEntity::class, ChatEntity::class],
+    version = 2,
     exportSchema = false
 )
 abstract class ChatDatabase : RoomDatabase() {
 
     abstract fun messageDao(): MessageDao
+
+    abstract fun chatDao(): ChatDao
 
     companion object {
         @Volatile
@@ -26,7 +30,9 @@ abstract class ChatDatabase : RoomDatabase() {
                     context.applicationContext,
                     ChatDatabase::class.java,
                     "chat_database"
-                ).build().also { INSTANCE = it }
+                )
+                    .fallbackToDestructiveMigration(true)
+                    .build().also { INSTANCE = it }
             }
         }
 

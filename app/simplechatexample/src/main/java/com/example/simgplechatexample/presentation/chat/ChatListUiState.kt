@@ -1,4 +1,4 @@
-package com.example.simgplechatexample.presentation.chatlist
+package com.example.simgplechatexample.presentation.chat
 
 import com.example.simgplechatexample.domain.entity.Message
 

@@ -1,6 +1,6 @@
 package com.example.simgplechatexample.domain.repository
 
-import androidx.paging.PagingData
+import com.example.simgplechatexample.domain.entity.Chat
 import com.example.simgplechatexample.domain.entity.Message
 import kotlinx.coroutines.flow.Flow
 
@@ -38,6 +38,12 @@ interface ChatRepository {
      * Очистка кэша
      */
     suspend fun clearCache()
+
+    fun getChatsStream(): Flow<List<Chat>>
+
+    suspend fun syncChatsFromNetwork()
+
+    suspend fun updateUnreadCount(chatId: String, reset: Boolean)
 }
 
 data class MessagePage(

@@ -1,13 +1,11 @@
-package com.example.simgplechatexample.presentation.chatlist
+package com.example.simgplechatexample.presentation.chat
 
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.simgplechatexample.domain.entity.Message
 import com.example.simgplechatexample.domain.repository.ChatRepository
-import com.example.simgplechatexample.domain.repository.MessagePage
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject

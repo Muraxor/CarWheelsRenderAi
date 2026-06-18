@@ -29,6 +29,8 @@ runtime = "1.11.2"
 androidBuiltInKotlin = "9.2.1"
 foundation = "1.11.2"
 material3 = "1.4.0"
+uiToolingPreview = "1.11.2"
+uiTooling = "1.11.2"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
@@ -66,6 +68,8 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 androidx-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
 foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "uiToolingPreview" }
+ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "uiTooling" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

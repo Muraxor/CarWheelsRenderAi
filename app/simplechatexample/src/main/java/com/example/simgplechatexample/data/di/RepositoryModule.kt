@@ -1,6 +1,7 @@
 package com.example.simgplechatexample.data.di
 
 import com.example.simgplechatexample.data.db.ChatDatabase
+import com.example.simgplechatexample.data.db.dao.ChatDao
 import com.example.simgplechatexample.data.db.dao.MessageDao
 import com.example.simgplechatexample.data.network.ChatApi
 import com.example.simgplechatexample.data.network.RetrofitClient
@@ -26,8 +27,13 @@ object RepositoryModule {
 
     @Provides
     @Singleton
+    fun provideChatDao(database: ChatDatabase): ChatDao = database.chatDao()
+
+    @Provides
+    @Singleton
     fun provideChatRepository(
         dao: MessageDao,
+        chatDao: ChatDao,
         api: ChatApi
-    ): ChatRepository = ChatRepositoryImpl(dao, api)
+    ): ChatRepository = ChatRepositoryImpl(dao, chatDao, api)
 }

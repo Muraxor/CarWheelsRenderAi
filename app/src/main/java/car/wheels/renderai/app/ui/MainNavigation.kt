@@ -1,7 +1,6 @@
 package car.wheels.renderai.app.ui
 
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_MULTIPLE_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -12,12 +11,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import car.wheels.renderai.TodoApp
 import car.wheels.renderai.core.TavernApp
-import com.example.simgplechatexample.presentation.chatlist.ChatScreen
+import com.example.simgplechatexample.presentation.chat.ChatScreen
+import com.example.simgplechatexample.presentation.chatlist.ChatListScreen
 
 @Composable
 fun MainNavigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "chat") {
+    NavHost(navController = navController, startDestination = "chat_list") {
         composable(route = "test") {
             TodoApp()
         }
@@ -39,8 +39,18 @@ fun MainNavigation() {
             }
         }
 
-        composable("chat") {
-            ChatScreen()
+        composable("chat_list") {
+            ChatListScreen(
+                onChatClick = { chatId ->
+                    navController.navigate("chat_detail/$chatId")
+                }
+            )
+        }
+
+        composable("chat_detail/{chatId}") { backStackEntry ->
+            val chatId = backStackEntry.arguments?.getString("chatId") ?: return@composable
+            // Здесь экран сообщений (твой существующий ChatScreen)
+            ChatScreen(chatId = chatId)
         }
     }
 }
