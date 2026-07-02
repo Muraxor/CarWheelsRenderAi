@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -63,13 +64,17 @@ fun ChatListScreen(
                 }
 
                 else -> {
-                    LazyColumn {
+                    LazyColumn(
+                        modifier = Modifier
+                            .testTag("chat_list")
+                    ) {
                         items(
                             items = chats,
                             key = { it.id }
                         ) { chat ->
                             ChatItem(
                                 chat = chat,
+                                modifier = Modifier.testTag("chat_item_${chat.id}"),
                                 onClick = { onChatClick(chat.id) }
                             )
                         }
@@ -81,9 +86,13 @@ fun ChatListScreen(
 }
 
 @Composable
-fun ChatItem(chat: Chat, onClick: () -> Unit) {
+fun ChatItem(
+    chat: Chat,
+    modifier: Modifier,
+    onClick: () -> Unit
+) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 4.dp)
             .clickable { onClick() }

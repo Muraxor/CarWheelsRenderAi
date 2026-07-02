@@ -2,6 +2,9 @@ package car.wheels.renderai.app.tbank
 
 import android.content.Context
 import car.wheels.renderai.R
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.LinkedList
 
 const val PARAM_DELAY_KEY = "param_delay_key"
@@ -66,4 +69,16 @@ class AnalyticManager(
 
 interface AnatilycSpec {
     fun sendEvent(params: Map<String, Any>)
+}
+
+fun main() = runBlocking {
+    launch {
+        delay(1000)
+        println("A")
+    }
+    launch {
+        delay(500)
+        println("B")
+    }
+    println("Start")
 }

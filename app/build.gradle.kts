@@ -29,6 +29,8 @@ project.extensions.configure<ApplicationExtension> {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
+
     buildTypes {
         debug {
             isDebuggable = true
@@ -69,6 +71,8 @@ kotlin {
 }
 
 dependencies {
+    androidTestImplementation(project(":benchmark"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.coroutines)
@@ -111,6 +115,18 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     // Optional - Integration with ViewModels
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    val media3Version = "1.3.0" // Use the latest stable version
+
+    // Core ExoPlayer functionality
+    implementation("androidx.media3:media3-exoplayer:$media3Version")
+
+    // UI components (PlayerView)
+    implementation("androidx.media3:media3-ui:$media3Version")
+
+    // Optional: DASH streaming support
+    implementation("androidx.media3:media3-exoplayer-dash:$media3Version")
+
 
     implementation(project(":app:simplechatexample"))
 }

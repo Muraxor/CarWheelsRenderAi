@@ -20,3 +20,4 @@ rootProject.name = "CarWheelsRenderAi"
 include(":app")
 include(":app:livecodeimproved")
 include(":app:simplechatexample")
+include(":benchmark")

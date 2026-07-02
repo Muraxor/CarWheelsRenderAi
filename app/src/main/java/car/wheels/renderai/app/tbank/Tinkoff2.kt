@@ -22,7 +22,7 @@ class Tinkoff2(
 
         val mutex = Mutex()
         val channel = Channel<Unit>()
-
+        Job
         mutex.lock()
 
         urlHelper.getUrls()
