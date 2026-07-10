@@ -1,13 +1,21 @@
 package car.wheels.renderai.core
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.EnumSet
@@ -20,7 +28,43 @@ import kotlin.math.absoluteValue
 import kotlin.time.Duration.Companion.seconds
 
 
-fun main() {
+fun main() = runBlocking {
+    coroutineScope {
+        supervisorScope {
+            launch {
+                println("start 1")
+                throw IllegalArgumentException()
+                delay(1000)
+                println(1)
+            }.also {
+                delay(500)
+
+            }
+
+            launch {
+                println("start 2")
+                delay(1000)
+                println(2)
+            }
+
+            launch {
+                println("start 3")
+                delay(1000)
+                println(3)
+            }
+        }
+
+        launch {
+            println("start 0")
+            delay(2000)
+            println(0)
+        }
+    }
+
+
+
+    println("Done")
+
 
     //println(shuffle(intArrayOf(1,3,5,2,4,6), 3))
     //println(findMaxConsecutiveOnes(intArrayOf(1,0,1,1,0,1)))
@@ -48,7 +92,11 @@ fun main() {
     //println(maxProfit(intArrayOf(7,1,5,3,6,4)))
     //println(test1(intArrayOf(3)).toList())
     //println(test3(intArrayOf(1, 3, 2, 4, 10, 8, 4, 2, 5, 3), 4))
-    println(findKthLargest(intArrayOf(2,3,123,11,20,33,45,20), 3))
+    //println(findKthLargest(intArrayOf(2,3,123,11,20,33,45,20), 3))
+}
+
+suspend fun test1() {
+    println(1)
 }
 
 fun isAnagram(s: String, t: String): Boolean {

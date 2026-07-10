@@ -13,12 +13,15 @@ import car.wheels.renderai.TodoApp
 import car.wheels.renderai.core.TavernApp
 import com.example.simgplechatexample.presentation.chat.ChatScreen
 import com.example.simgplechatexample.presentation.chatlist.ChatListScreen
+import com.example.simgplechatexample.presentation.test.login.LoginScreen
+import com.example.simgplechatexample.presentation.tasks.Screen
+import com.example.simgplechatexample.presentation.test.TestScreens
 
 @Composable
 fun MainNavigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "chat_list") {
-        composable(route = "test") {
+    NavHost(navController = navController, startDestination = "test") {
+        composable(route = "todoApp") {
             TodoApp()
         }
         composable("main") {
@@ -51,6 +54,16 @@ fun MainNavigation() {
             val chatId = backStackEntry.arguments?.getString("chatId") ?: return@composable
             // Здесь экран сообщений (твой существующий ChatScreen)
             ChatScreen(chatId = chatId)
+        }
+
+        composable("test") {
+            TestScreens(
+                onLogin = { navController.navigate("chat_list") }
+            )
+        }
+
+        composable("plan") {
+            Screen()
         }
     }
 }

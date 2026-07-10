@@ -61,8 +61,12 @@ dependencies {
     implementation(libs.androidx.paging.runtime.ktx)
 
 
+    // Для Compose
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
+
+    implementation(libs.androidx.activity.compose)
 
     platform(libs.compose.bom).apply {
         implementation(this)
@@ -71,12 +75,6 @@ dependencies {
     implementation(libs.androidx.paging.compose)
     implementation(libs.material3)
     implementation(libs.androidx.material3.icons.extended)
-
-    implementation(libs.hilt)
-    ksp(libs.hilt.compiler)
-
-    // Для Compose
-    implementation(libs.androidx.hilt.navigation.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
